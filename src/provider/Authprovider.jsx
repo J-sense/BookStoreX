@@ -34,7 +34,7 @@ const Authprovider = ({ children }) => {
     };
   }, []);
   const authInfo = {
-    name: "najmul hassan jishan",
+  
     createUser,
     logInUser,
     logOut,
