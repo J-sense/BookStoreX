@@ -6,6 +6,8 @@ import {
   FaShareAlt,
 } from "react-icons/fa";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import { addToCollection } from "../../../../redux/features/cart/cartSlice";
 
 const BookDetailsPage = ({ book }) => {
   //   const book = {
@@ -22,7 +24,7 @@ const BookDetailsPage = ({ book }) => {
   //     totalPages: 192,
   //     yearOfPublishing: 1925,
   //   };
-
+  const dispatch = useDispatch();
   const renderRating = () => {
     const stars = [];
     const fullStars = Math.floor(book.rating);
@@ -41,7 +43,9 @@ const BookDetailsPage = ({ book }) => {
     }
     return stars;
   };
-
+  const handleAddToCollection = (book) => {
+    dispatch(addToCollection({ bookId: book?.bookId }));
+  };
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -133,7 +137,10 @@ const BookDetailsPage = ({ book }) => {
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium flex-1 text-center transition-colors">
+                <button
+                  onClick={() => handleAddToCollection(book)}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium flex-1 text-center transition-colors"
+                >
                   Add to Collection
                 </button>
                 <button className="border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 px-6 py-3 rounded-lg font-medium flex-1 text-center transition-colors">

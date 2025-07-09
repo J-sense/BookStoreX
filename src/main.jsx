@@ -11,6 +11,8 @@ import BookStorXLogin from "./components/modules/auth/BookStorXLogin.jsx";
 import Authprovider from "./provider/Authprovider.jsx";
 import PrivateRoute from "./provider/PrivateRoute.jsx";
 import Authors from "./components/Pages/Authors.jsx";
+import { Provider } from "react-redux";
+import { store } from "./redux/features/store.js";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -47,8 +49,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Authprovider>
-      <RouterProvider router={router} />
-    </Authprovider>
+    <Provider store={store}>
+      <Authprovider>
+        <RouterProvider router={router} />
+      </Authprovider>
+    </Provider>
   </StrictMode>
 );
