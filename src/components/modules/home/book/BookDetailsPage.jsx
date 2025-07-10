@@ -6,8 +6,12 @@ import {
   FaShareAlt,
 } from "react-icons/fa";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { useDispatch } from "react-redux";
-import { addToCollection } from "../../../../redux/features/cart/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCollection,
+  addToFavroute,
+} from "../../../../redux/features/cart/cartSlice";
+import { useState } from "react";
 
 const BookDetailsPage = ({ book }) => {
   //   const book = {
@@ -25,6 +29,8 @@ const BookDetailsPage = ({ book }) => {
   //     yearOfPublishing: 1925,
   //   };
   const dispatch = useDispatch();
+  const [prioboi, setPrioboi] = useState();
+  const favBook = useSelector((state) => state.book.fav);
   const renderRating = () => {
     const stars = [];
     const fullStars = Math.floor(book.rating);
@@ -45,6 +51,15 @@ const BookDetailsPage = ({ book }) => {
   };
   const handleAddToCollection = (book) => {
     dispatch(addToCollection({ bookId: book?.bookId }));
+  };
+  const handleFacroute = (book) => {
+    const isFavBookExists = favBook.find(
+      (item) => item?.bookId == book?.bookId
+    );
+    if (isFavBookExists) {
+      setPrioboi("book is already exists");
+    }
+    dispatch(addToFavroute({ bookId: book?.bookId }));
   };
   return (
     <div className="min-h-screen bg-gray-50 py-12">
@@ -85,12 +100,24 @@ const BookDetailsPage = ({ book }) => {
                   </p>
                 </div>
                 <div className="flex space-x-3">
-                  <button className="text-gray-400 hover:text-red-500 transition-colors">
-                    <FaHeart className="text-2xl" />
-                  </button>
-                  <button className="text-gray-400 hover:text-indigo-600 transition-colors">
-                    <FaShareAlt className="text-2xl" />
-                  </button>
+                  {!prioboi ? (
+                    <>
+                      {" "}
+                      <button
+                        className="text-gray-400 hover:text-red-500 transition-colors"
+                        onClick={() => handleFacroute(book)}
+                      >
+                        <FaHeart className="text-2xl" />
+                      </button>
+                      <button className="text-gray-400 hover:text-indigo-600 transition-colors">
+                        <FaShareAlt className="text-2xl" />
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <h1>{prioboi}</h1>
+                    </>
+                  )}
                 </div>
               </div>
 
